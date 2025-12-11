@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angle Calculation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="../public/css/fontFamily.css">
+    <link rel="stylesheet" href="../public/css/default.css">
+    <link rel="stylesheet" href="../public/css/style.css">
+
+    <style>
+        .calculator-container { padding: 40px 0; }
+        .calculator-content { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgb(255, 255, 255); }
+        .input-group { margin-bottom: 10px; }
+        input[type="number"] { padding: 5px; width: 80px; }
+        button { padding: 8px 15px; cursor: pointer; background-color: #6c0b0b; color: white; border: none; }
+        button:hover { background-color: #6c0b0b; } 
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #6c0b0b; color: #f9f9f9; }
+    </style>
+</head>
+
+<body>
+<nav class="navbar target">
+    <div class="container navbar-content">
+        
+       
+        
+        <div class="nav-center menu-links-container">
+             <div class="nav-links nav-links-desktop">
+                <a href="about.html">About Me</a>
+                <a href="Fundamental Calculations.html">Fundamental Calculator</a>
+                <a href="anglecalculator.html">Angle Calculator</a>
+                <a href="../index.html">Home</a>
+
+            </div>
+        </div>
+        
+        <span class="icons">
+
+            <i class="fa-solid fa-envelope" title="aykan24@itu.edu.tr"></i>
+            
+        </span>
+        
+    </div>
+</nav>
+    
+    <main class="calculator-container">
+        <div class="container calculator-content">
+            <h2>Angle Calculation (Degree & Grad)</h2>
+            <p>Please enter 4 angle values ​​(in degrees):</p>
+            
+            <div class="input-group">
+                1. Angle: <input type="number" id="angle1" value="0">
+                2. Angle: <input type="number" id="angle2" value="0">
+                3. Angle: <input type="number" id="angle3" value="0">
+                4. Angle: <input type="number" id="angle4" value="0">
+                <button onclick="hesapla()">Calculate</button>
+            </div>
+
+            <table id="resultTable">
+                <thead>
+                    <tr>
+                        <th>Degrees</th>
+                        <th>Sin</th>
+                        <th>Cos</th>
+                        <th>Tan</th>
+                        <th>Grad</th>
+                        <th>Sin (G)</th>
+                        <th>Cos (G)</th>
+                        <th>Tan (G)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            </div>
+    </main>
+    
+    <script>
+        function hesapla() {
+            const inputs = [
+                document.getElementById('angle1').value,
+                document.getElementById('angle2').value,
+                document.getElementById('angle3').value,
+                document.getElementById('angle4').value
+            ];
+
+            const tbody = document.querySelector("#resultTable tbody");
+            tbody.innerHTML = ""; 
+
+            inputs.forEach(val => {
+                if (val === "") return;
+
+                let deg = parseFloat(val);
+                let radFromDeg = deg * (Math.PI / 180);
+
+                let sinD = Math.sin(radFromDeg);
+                let cosD = Math.cos(radFromDeg);
+                let tanD = Math.tan(radFromDeg);
+
+                let grad = deg * (400 / 360);
+                let radFromGrad = grad * (Math.PI / 200);
+
+                let sinG = Math.sin(radFromGrad);
+                let cosG = Math.cos(radFromGrad);
+                let tanG = Math.tan(radFromGrad);
+
+                let tanDStr = Math.abs(tanD) > 10000000 ? "Undefined" : tanD.toFixed(4);
+                let tanGStr = Math.abs(tanG) > 10000000 ? "Undefined" : tanG.toFixed(4);
+
+                let row = `<tr>
+                    <td>${deg}</td>
+                    <td>${sinD.toFixed(4)}</td>
+                    <td>${cosD.toFixed(4)}</td>
+                    <td>${tanDStr}</td>
+                    <td>${grad.toFixed(2)}</td>
+                    <td>${sinG.toFixed(4)}</td>
+                    <td>${cosG.toFixed(4)}</td>
+                    <td>${tanGStr}</td>
+                </tr>`;
+
+                tbody.innerHTML += row;
+            });
+        }
+    </script>
+    <script src="../public/js/scroll.js"></script> 
+</body>
+
+</html>
