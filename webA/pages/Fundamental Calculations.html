@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamental Calculations</title>
+
+    <link rel="stylesheet" href="../public/css/fontFamily.css">
+    <link rel="stylesheet" href="../public/css/default.css">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <style>
+        .calculator-container { padding: 40px 0; }
+        
+        .calculator-content { 
+            background: rgba(255, 250, 250, 0.95);
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+            max-width: 900px;
+            margin: 0 auto;
+            color:#000000;
+        }
+
+        /* Sekme (Tab) Yapısı */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000000;
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #000000;
+            background: none;
+            border: none;
+            border-bottom: 4px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: #6c0b0b;
+            border-bottom-color: #6c0b0b;
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.5s; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Elemanları */
+        .input-group-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-box label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .input-box input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        button.calc-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #6c0b0b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        button.calc-btn:hover { background-color: #4a0606; }
+
+        /* Sonuç Kutuları */
+        .result-display {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f2f2f1;
+            border-left: 5px solid #558b2f;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .result-display h3 { color: #2e7d32; margin-bottom: 10px; }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #6c0b0b;
+            font-size: 1.1rem;
+            color:#000000;
+        }
+        .result-item span { font-weight: bold; }
+
+    </style>
+</head>
+
+<body>
+<nav class="navbar target">
+    <div class="container navbar-content">
+        <div class="nav-center menu-links-container">
+                <a href="about.html">About Me</a>
+                <a href="Fundamental Calculations.html" style="color:#ef6e6e; border-bottom: 2px solid #ef6e6e;">Fundamental Calculator</a>
+                <a href="anglecalculator.html">Angle Calculator</a>
+                 <a href="../index.html">Home</a>
+
+        </div>
+        
+        <span class="icons">
+            <i class="fa-solid fa-envelope" title="aykan24@itu.edu.tr"></i>
+
+        </span>
+    </div>
+</nav>
+    
+    <main class="calculator-container">
+        <div class="container calculator-content">
+            <h2 style="text-align:center; margin-bottom:10px;">Fundamental Surveying Tasks</h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('task1')">1. Find Point (Coord Calculation)</button>
+                <button class="tab-btn" onclick="openTab('task2')">2. Find Azimuth & Distance</button>
+            </div>
+
+            <div id="task1" class="tab-content active">
+                <p style="color:#666; margin-bottom:20px;">Calculate coordinates of Point B using Point A, Distance, and Azimuth.</p>
+                
+                <div class="input-group-row">
+                    <div class="input-box">
+                        <label>Point A (Y - East)</label>
+                        <input type="number" id="t1_yA" placeholder="0.000">
+                    </div>
+                    <div class="input-box">
+                        <label>Point A (X - North)</label>
+                        <input type="number" id="t1_xA" placeholder="0.000">
+                    </div>
+                </div>
+
+                <div class="input-group-row">
+                    <div class="input-box">
+                        <label>Distance (S_AB)</label>
+                        <input type="number" id="t1_dist" placeholder="Meters">
+                    </div>
+                    <div class="input-box">
+                        <label>Azimuth (t_AB)</label>
+                        <input type="number" id="t1_azi" placeholder="Degrees (Decimal)">
+                    </div>
+                </div>
+
+                <button class="calc-btn" onclick="calculateTask1()">Calculate Coordinates (B)</button>
+
+                <div class="result-display" id="res1">
+                    <h3>Result: Point B Coordinates</h3>
+                    <div class="result-item">Y (East): <span id="out_yB">0.000</span></div>
+                    <div class="result-item">X (North): <span id="out_xB">0.000</span></div>
+                </div>
+            </div>
+
+            <div id="task2" class="tab-content">
+                <p style="color:#666; margin-bottom:20px;">Calculate Distance and Azimuth between Point A and Point B.</p>
+                
+                <div class="input-group-row">
+                    <div class="input-box">
+                        <label>Point A (Y - East)</label>
+                        <input type="number" id="t2_yA" placeholder="0.000">
+                    </div>
+                    <div class="input-box">
+                        <label>Point A (X - North)</label>
+                        <input type="number" id="t2_xA" placeholder="0.000">
+                    </div>
+                </div>
+
+                <div class="input-group-row">
+                    <div class="input-box">
+                        <label>Point B (Y - East)</label>
+                        <input type="number" id="t2_yB" placeholder="0.000">
+                    </div>
+                    <div class="input-box">
+                        <label>Point B (X - North)</label>
+                        <input type="number" id="t2_xB" placeholder="0.000">
+                    </div>
+                </div>
+
+                <button class="calc-btn" onclick="calculateTask2()">Calculate Azimuth & Distance</button>
+
+                <div class="result-display" id="res2">
+                    <h3>Result: Distance & Azimuth</h3>
+                    <div class="result-item">Distance (S): <span id="out_dist">0.000</span> m</div>
+                    <div class="result-item">Azimuth (Deg): <span id="out_aziD">0.0000</span>°</div>
+                    <div class="result-item">Azimuth (Grad): <span id="out_aziG">0.0000</span> gon</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    
+    <script>
+        // Sekme Geçişi
+        function openTab(tabName) {
+            // Tüm içerikleri gizle
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            // Seçileni aç
+            document.getElementById(tabName).classList.add('active');
+            
+            const btns = document.querySelectorAll('.tab-btn');
+            if(tabName === 'task1') btns[0].classList.add('active');
+            else btns[1].classList.add('active');
+        }
+
+        // --- 1. TEMEL ÖDEV (Nokta Hesabı) ---
+        function calculateTask1() {
+            const yA = parseFloat(document.getElementById('t1_yA').value);
+            const xA = parseFloat(document.getElementById('t1_xA').value);
+            const dist = parseFloat(document.getElementById('t1_dist').value);
+            const aziDeg = parseFloat(document.getElementById('t1_azi').value);
+
+            if(isNaN(yA) || isNaN(xA) || isNaN(dist) || isNaN(aziDeg)) {
+                alert("Please check all inputs!");
+                return;
+            }
+
+            // Dereceyi Radyana Çevir
+            const rad = aziDeg * (Math.PI / 180);
+
+            // Temel Ödev Formülleri
+            // yB = yA + S * sin(t)
+            // xB = xA + S * cos(t)
+            const yB = yA + dist * Math.sin(rad);
+            const xB = xA + dist * Math.cos(rad);
+
+            document.getElementById('out_yB').innerText = yB.toFixed(3);
+            document.getElementById('out_xB').innerText = xB.toFixed(3);
+            document.getElementById('res1').style.display = 'block';
+        }
+
+        // --- 2. TEMEL ÖDEV (Semt ve Kenar) ---
+        function calculateTask2() {
+            const yA = parseFloat(document.getElementById('t2_yA').value);
+            const xA = parseFloat(document.getElementById('t2_xA').value);
+            const yB = parseFloat(document.getElementById('t2_yB').value);
+            const xB = parseFloat(document.getElementById('t2_xB').value);
+
+            if(isNaN(yA) || isNaN(xA) || isNaN(yB) || isNaN(xB)) {
+                alert("Please check all inputs!");
+                return;
+            }
+
+            const dY = yB - yA;
+            const dX = xB - xA;
+
+            // Kenar (Distance) Hesabı
+            const dist = Math.sqrt(dY*dY + dX*dX);
+
+            // Semt (Azimuth) Hesabı - Atan2 tüm bölgeleri otomatik halleder (-PI ile +PI arası verir)
+            let rad = Math.atan2(dY, dX);
+            
+            // Negatif açıları pozitife çevir (0 - 2PI arası)
+            if (rad < 0) rad += 2 * Math.PI;
+
+            // Derece ve Grad Çevrimi
+            const deg = rad * (180 / Math.PI);
+            const grad = rad * (200 / Math.PI);
+
+            document.getElementById('out_dist').innerText = dist.toFixed(3);
+            document.getElementById('out_aziD').innerText = deg.toFixed(4);
+            document.getElementById('out_aziG').innerText = grad.toFixed(4);
+            document.getElementById('res2').style.display = 'block';
+        }
+    </script>
+    <script src="../public/js/scroll.js"></script> 
+</body>
+</html>
